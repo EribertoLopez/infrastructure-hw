@@ -4,6 +4,7 @@ from flask_socketio import SocketIO
 import os
 # Load environment variable
 my_env_var = os.getenv('KAFKA_TOPIC', 'my-topic')
+custom_header = os.getenv('CUSTOM_HEADER', 'default')
 app = Flask(__name__)
 socketio = SocketIO(app)
 
@@ -30,11 +31,12 @@ def kafka_consumer():
         # print(f"Received: {message.value.decode('utf-8')}")
         socketio.emit('message', {'data': message.value})
         # socketio.emit('message', {'data': message.value.decode('utf-8')})
-        
+
 @socketio.event
 def connect(sid):
     print('Client connected:', sid)
     socketio.emit('env', {'data': my_env_var}, to=sid)
+    socketio.emit('custom_header', {'data': custom_header}, to=sid)
 
 if __name__ == '__main__':
     socketio.start_background_task(kafka_consumer)

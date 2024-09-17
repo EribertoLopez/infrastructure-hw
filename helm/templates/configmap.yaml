@@ -5,3 +5,5 @@ metadata:
   namespace: {{ .Values.namespace }}
 data:
   CUSTOM_HEADER: {{ .Values.configmap.data.CUSTOM_HEADER }}
+  KAFKA_BOOTSTRAP_SERVERS: {{ .Values.kafka.bootstrapServers }}
+  KAFKA_TOPIC: {{ .Values.kafka.topicName }}

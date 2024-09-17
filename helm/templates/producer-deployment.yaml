@@ -17,8 +17,6 @@ spec:
       - name: {{ .Values.producer.appName }}
         image: "{{ .Values.producer.image.repository }}:{{ .Values.producer.image.tag }}"
         imagePullPolicy: {{ .Values.producer.image.pullPolicy }}
-        env:
-        - name: KAFKA_BOOTSTRAP_SERVERS
-          value: {{ .Values.kafka.bootstrapServers }}
-        - name: KAFKA_TOPIC
-          value: {{ .Values.kafka.topicName }}
+        envFrom:
+        - configMapRef:
+            name: {{ .Values.configmap.name }}

@@ -8,6 +8,15 @@
 </head>
 <body>
     <h1 id="top">Hello World Consumer</h1>
+
+    <h2 id="custom_header"></h2>
+    <script>
+        var socket = io();
+        socket.on('custom_header', function(msg) {
+            document.getElementById('custom_header').textContent = msg.data;
+        });
+    </script>
+
     <h1 id="env"></h1>
     <script>
         var socket = io();
@@ -15,6 +24,7 @@
             document.getElementById('env').textContent = 'Kafka Topic: ' + msg.data;
         });
     </script>
+    
     <ul id="messages"></ul>
     <script>
         var socket = io();
