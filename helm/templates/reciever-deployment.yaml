@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.consumer.appName }}
+spec:
+  replicas: {{ .Values.consumer.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Values.consumer.appName }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.consumer.appName }}
+    spec:
+      containers:
+      - name: {{ .Values.consumer.appName }}
+        image: "{{ .Values.consumer.image.repository }}:{{ .Values.consumer.image.tag }}"
+        imagePullPolicy: {{ .Values.consumer.image.pullPolicy }}
+        ports:
+        - containerPort: 5000
+        env:
+        - name: KAFKA_BOOTSTRAP_SERVERS
+          value: "my-cluster-kafka-bootstrap.kafka.svc.cluster.local:9092"
+        - name: KAFKA_TOPIC
+          value: "my-topic"
