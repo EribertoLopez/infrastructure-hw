@@ -3,16 +3,30 @@ import random
 from kafka import KafkaProducer
 import datetime
 import os
+
+topic_name = os.getenv('KAFKA_TOPIC', 'my-topic')
 producer = KafkaProducer(
     bootstrap_servers=[os.environ.get(
         'KAFKA_BOOTSTRAP_SERVERS',
         'my-cluster-kafka-bootstrap:9092'
     )] 
 )
-
+kirby = [
+   "(੭｡╹▿╹｡)੭",
+   "<(˶ᵔᵕᵔ˶)>",
+    "⊂(◉‿◉)つ",
+    "¯\_(ツ)_/¯",
+    "⊂(´・ω・｀⊂)",
+    "⊂(´・◡・⊂ )∘˚˳°",
+    "¯\_(ツ)_/¯",
+    "(˶ᵔ ᵕ ᵔ˶)",
+    "৻(  •̀ ᗜ •́  ৻)",
+    "(╯'□')╯︵ ┻━┻",
+]
+my_env_var = topic_name.split('-')[0] 
 while True:
-    message = "Hello world " + datetime.datetime.now().strftime("%H:%M:%S")
-    producer.send(os.environ.get('KAFKA_TOPIC','my-topic'), message.encode('utf-8'))
-    print(f"Sent: {message}")
     sleep_time = random.randint(1, 10)
+    message = f"Hello world from {my_env_var if my_env_var != 'my' else 'default'} producer - {kirby[sleep_time-1]} " + datetime.datetime.now().strftime("%H:%M:%S")
+    producer.send(topic_name, message.encode('utf-8'))
+    print(f"Sent: {message}")
     time.sleep(sleep_time)

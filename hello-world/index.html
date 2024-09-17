@@ -7,7 +7,14 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
 </head>
 <body>
-    <h1>Hello World Broadcasts</h1>
+    <h1 id="top">Hello World Consumer</h1>
+    <h1 id="env"></h1>
+    <script>
+        var socket = io();
+        socket.on('env', function(msg) {
+            document.getElementById('env').textContent = 'Kafka Topic: ' + msg.data;
+        });
+    </script>
     <ul id="messages"></ul>
     <script>
         var socket = io();

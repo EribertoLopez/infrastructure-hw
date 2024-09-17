@@ -1,33 +1,28 @@
-namespace: default
+namespace: prod
+kafka:
+  topicName: prod-topic
 
 configmap:
   name: helloconfigmapv1.0
   data:
-    CUSTOM_HEADER: 'Customized with a configmap!'
+    CUSTOM_HEADER: 'Hello World Prod!'
 
-producer:
-  appName: producer
-  image:
-    repository: docker.io/library/producer
-    pullPolicy: IfNotPresent
-    tag: latest
-  replicaCount: 1
+# producer:
+#   appName: producer
+#   image:
+#     repository: docker.io/library/producer
+#     pullPolicy: IfNotPresent
+#     tag: latest
+#   replicaCount: 1
+
   
-consumer:
-  appName: consumer
-  image:
-    repository: docker.io/library/consumer
-    pullPolicy: IfNotPresent
-    tag: latest
-  replicaCount: 1
-  containers:
-    ports:
-      containerPort: 5000
-
-kafka:
-  clusterName: my-cluster
-  topicName: my-topic
-  bootstrapServers: my-cluster-kafka-bootstrap.kafka.svc.cluster.local:9092
+# consumer:
+#   appName: consumer
+#   image:
+#     repository: docker.io/library/consumer
+#     pullPolicy: IfNotPresent
+#     tag: latest
+#   replicaCount: 1
 # # Default values for hello-world.
 # # This is a YAML-formatted file.
 # # Declare variables to be passed into your templates.

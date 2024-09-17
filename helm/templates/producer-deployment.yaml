@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ .Values.producer.appName }}
+  namespace: {{ .Values.namespace }}
 spec:
   replicas: {{ .Values.producer.replicaCount }}
   selector:
@@ -13,11 +14,11 @@ spec:
         app: {{ .Values.producer.appName }}
     spec:
       containers:
-      - name: broadcaster
+      - name: {{ .Values.producer.appName }}
         image: "{{ .Values.producer.image.repository }}:{{ .Values.producer.image.tag }}"
         imagePullPolicy: {{ .Values.producer.image.pullPolicy }}
         env:
         - name: KAFKA_BOOTSTRAP_SERVERS
-          value: "my-cluster-kafka-bootstrap.kafka.svc.cluster.local:9092"
+          value: {{ .Values.kafka.bootstrapServers }}
         - name: KAFKA_TOPIC
-          value: "my-topic"
+          value: {{ .Values.kafka.topicName }}
