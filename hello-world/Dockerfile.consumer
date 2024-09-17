@@ -1,0 +1,18 @@
+# Use an official Python runtime as the base image
+FROM python:3.11-slim
+
+# Set the working directory in the container
+WORKDIR /app
+
+# Copy the consumer script and HTML template into the container
+COPY ./hello-world/consumer.py .
+COPY ./hello-world/index.html templates/
+
+# Install the required Python packages
+RUN pip install kafka-python flask flask-socketio
+
+# Expose the port the app runs on
+EXPOSE 5000
+
+# Run the receiver script when the container launches
+CMD ["python", "consumer.py"]
