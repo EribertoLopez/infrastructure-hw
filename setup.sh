@@ -4,9 +4,7 @@ echo "Starting Minikube..."
 minikube start
 
 echo "Creating application images and caching in minikube..."
-eval $(minikube docker-env)
-docker build -t producer:latest -f ./hello-world/Dockerfile.producer .
-docker build -t consumer:latest -f ./hello-world/Dockerfile.consumer .
+./build_images.sh
 
 echo "Checking if images are cached in minikube..."
 minikube image ls | grep 'producer\|consumer'
@@ -24,5 +22,7 @@ echo "Deploying hello-world producer and consumer..."
 helm install hello-world ./helm
 
 echo "Creating dev and prod environments..."
-chmod +x ./create-envs.sh
+# chmod +x ./create-envs.sh
 ./create-envs.sh
+sleep 4
+./port_forward.sh
